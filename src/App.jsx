@@ -481,6 +481,24 @@ function App() {
     const [photoCandidateIndex, setPhotoCandidateIndex] = useState(0)
     const [isPhotoAvailable, setIsPhotoAvailable] = useState(true)
 
+    const currentCandidateIndex = searchableCandidates.findIndex(
+      (candidate) => candidate.id === candidateId
+    )
+    const previousCandidate =
+      currentCandidateIndex > 0 ? searchableCandidates[currentCandidateIndex - 1] : null
+    const nextCandidate =
+      currentCandidateIndex >= 0 && currentCandidateIndex < searchableCandidates.length - 1
+        ? searchableCandidates[currentCandidateIndex + 1]
+        : null
+
+    const goToCandidate = (id) => {
+      const targetIndex = searchableCandidates.findIndex((candidate) => candidate.id === id)
+      if (targetIndex >= 0) {
+        setCurrentResultsPage(Math.floor(targetIndex / ROWS_PER_PAGE) + 1)
+      }
+      navigate(`/candidate/${id}`)
+    }
+
     const selectedCandidate = candidateData.find((candidate) => candidate.id === candidateId)
     const photoFilesToTry = selectedCandidate
       ? ['jpg', 'jpeg', 'png', 'webp'].flatMap((extension) => {
@@ -688,6 +706,30 @@ function App() {
             </section>
           </>
         )}
+
+        {searchableCandidates.length > 0 && currentCandidateIndex >= 0 ? (
+          <footer className="pagination-footer">
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => goToCandidate(previousCandidate.id)}
+              disabled={!previousCandidate}
+            >
+              Previous Candidate
+            </button>
+            <span>
+              {currentCandidateIndex + 1} of {searchableCandidates.length}
+            </span>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={() => goToCandidate(nextCandidate.id)}
+              disabled={!nextCandidate}
+            >
+              Next Candidate
+            </button>
+          </footer>
+        ) : null}
 
         <button type="button" className="secondary-button" onClick={() => navigate('/results')}>
           Back to Results
