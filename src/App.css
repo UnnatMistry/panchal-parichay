@@ -15,6 +15,14 @@
   color: #7a1111;
 }
 
+.site-logo {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 .site-header p {
   margin: 8px 0 0;
   font-size: 1rem;

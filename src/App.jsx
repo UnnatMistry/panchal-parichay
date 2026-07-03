@@ -26,6 +26,7 @@ const doesAgeMatch = (candidateAge, selectedRange) => {
 
 function App() {
   const vishwakarmaImageUrl = `${import.meta.env.BASE_URL}vishwakarma-pic.jpeg`
+  const siteLogoUrl = `${import.meta.env.BASE_URL}panchal-parichay-logo.svg`
   const navigate = useNavigate()
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => window.sessionStorage.getItem('pp-authenticated') === 'true'
@@ -155,7 +156,11 @@ function App() {
   const HomePage = () => (
     <div className="home-page">
       <header className="site-header">
-        <h1>Panchal Parichay</h1>
+        <img
+          src={siteLogoUrl}
+          alt="Panchal Parichay"
+          className="site-logo"
+        />
         <p>Trusted matrimony community for Panchal families.</p>
       </header>
 
